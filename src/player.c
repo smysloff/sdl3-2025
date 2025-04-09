@@ -21,10 +21,10 @@ static void quit() {
 }
 
 static void handle_events(/*SDL_Event event*/) {
-    
+
 }
 
-static void update(float delta_time) {
+static void Player_Update(float delta_time) {
 
     const bool *keyboard_state = SDL_GetKeyboardState(NULL);
 
@@ -75,7 +75,7 @@ Entity Player_Init(SDL_Renderer *renderer) {
     return (Entity) {
         .quit = quit,
         .handle_events = handle_events,
-        .update = update,
+        .update = Player_Update,
         .render = render,
     };
 }

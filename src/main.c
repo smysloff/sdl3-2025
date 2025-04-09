@@ -9,6 +9,7 @@
 
 #include "entity.h"
 #include "player.h"
+#include "deltatime.h"
 
 #define render_entities() do {                        \
     for (size_t i = 0; i < entity_count; ++i) {       \
@@ -16,9 +17,9 @@
     }                                                 \
 } while (0)
 
-#define update_entities() do {                        \
+#define update_entities(deltatime) do {               \
     for (size_t i = 0; i < entity_count; ++i) {       \
-        entities[i].update(delta_time);               \
+        entities[i].update(deltatime);                \
     }                                                 \
 } while (0)
 
@@ -34,23 +35,14 @@
     }                                                 \
 } while (0)
 
-#define update_delta_time() do {                      \
-    last_tick = current_tick;                         \
-    current_tick = SDL_GetTicks();                    \
-    delta_time = (current_tick - last_tick) / 1000.f; \
-} while (0)
-
 SDL_Window *window;
 SDL_Renderer *renderer;
 Entity entities[ENTITIES_MAX];
 size_t entity_count = 0;
-Uint64 last_tick = 0;
-Uint64 current_tick = 0;
-float delta_time = 0;
 
-void update() {
-    update_delta_time();
-    update_entities();
+void update(void) {
+    deltatime.update(SDL_GetTicks());
+    update_entities(deltatime.value);
 }
 
 void render(void) {
@@ -76,7 +68,7 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event) {
     }
 
     handle_events_entities();
-    
+
     return SDL_APP_CONTINUE;
 }
 

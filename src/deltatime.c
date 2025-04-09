@@ -3,6 +3,8 @@
 
 #include "deltatime.h"
 
+static void update(uint64_t timestamp);
+
 DeltaTime deltatime = {
     .value = 0,
     .update = update,

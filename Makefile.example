@@ -3,7 +3,7 @@ all: clean build run
 build: build-windows
 
 build-windows:
-	@gcc src/main.c src/player.c                                             \
+	@gcc src/main.c src/player.c src/deltatime.c                       \
 		-IC:\Dev\SDL3/include -LC:\Dev\SDL3\lib -lSDL3                   \
 		-IC:\Dev\SDL3_image\include -LC:\Dev\SDL3_image\lib -lSDL3_image \
 		-lmingw32 -lkernel32 -ladvapi32 -lgdi32 -limm32 -lole32          \
@@ -12,16 +12,16 @@ build-windows:
 		-o game
 
 build-macos:
-	@gcc src/main.c src/player.c                   \
-		$(pkg-config --cflags sdl3 sdl3_image) \
-		$(pkg-config --libs sdl3 sdl3_image)   \
-		-O3                                    \
+	@gcc src/main.c src/player.c src/deltatime.c \
+		$(pkg-config --cflags sdl3 sdl3_image)     \
+		$(pkg-config --libs sdl3 sdl3_image)       \
+		-O3                                        \
 		-o game
 
 build-linux:
-	@gcc src/main.c src/player.c  \
-		-lSDL3 -lSDL3_image   \
-		-O3                   \
+	@gcc src/main.c src/player.c deltatime.c \
+		-lSDL3 -lSDL3_image                    \
+		-O3                                    \
 		-o game
 
 run:

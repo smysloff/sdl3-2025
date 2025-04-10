@@ -20,6 +20,7 @@ ifeq ($(TARGET_SYSTEM), Windows)
 		-I/c/Dev/SDL3_image/include -L/c/Dev/SDL3_image/lib -lSDL3_image \
 		-lmingw32 -lkernel32 -ladvapi32 -lgdi32 -limm32 -lole32 \
 		-loleaut32 -lsetupapi -lshell32 -luser32 -lversion -lwinmm \
+		-Wl,-subsystem,windows \
 		-O3 \
 		-o $(APP)
 else ifeq ($(TARGET_SYSTEM),MacOS)

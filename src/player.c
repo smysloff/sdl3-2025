@@ -9,10 +9,14 @@ static float scale = 4.f;
 
 static char texture_path[] = "char_spritesheet.png";
 
-static SDL_Texture *texture;
+static SDL_FRect srcrect = {
+    .x = 18, .y = 16,
+    .w = 13, .h = 16,
+};
 
-static SDL_FRect srcrect;
-static SDL_FRect dstrect;
+static SDL_FRect dstrect = { 0 };
+
+static SDL_Texture *texture;
 
 struct { float x, y; } position = { 0 };
 
@@ -24,30 +28,30 @@ static void handle_events(/*SDL_Event event*/) {
 
 }
 
-static void Player_Update(float delta_time) {
+static void update(float deltatime) {
 
     const bool *keyboard_state = SDL_GetKeyboardState(NULL);
 
+    float framespeed = speed * deltatime;
 
     if (keyboard_state[SDL_SCANCODE_W]) {
-        position.y -= speed * delta_time;
+        position.y -= framespeed;
     }
 
     if (keyboard_state[SDL_SCANCODE_S]) {
-        position.y += speed * delta_time;
+        position.y += framespeed;
     }
 
     if (keyboard_state[SDL_SCANCODE_A]) {
-        position.x -= speed * delta_time;
+        position.x -= framespeed;
     }
 
     if (keyboard_state[SDL_SCANCODE_D]) {
-        position.x += speed * delta_time;
+        position.x += framespeed;
     }
 
     dstrect.x = position.x;
     dstrect.y = position.y;
-
 }
 
 static void render(SDL_Renderer *renderer) {
@@ -55,11 +59,6 @@ static void render(SDL_Renderer *renderer) {
 }
 
 Entity Player_Init(SDL_Renderer *renderer) {
-
-    srcrect.x = 18;
-    srcrect.y = 16;
-    srcrect.w = 13;
-    srcrect.h = 16;
 
     position.x = (800 - srcrect.x * scale) / 2;
     position.y = (600 - srcrect.y * scale) / 2;
@@ -75,7 +74,7 @@ Entity Player_Init(SDL_Renderer *renderer) {
     return (Entity) {
         .quit = quit,
         .handle_events = handle_events,
-        .update = Player_Update,
+        .update = update,
         .render = render,
     };
 }

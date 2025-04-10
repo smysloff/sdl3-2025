@@ -11,13 +11,13 @@ endif
 all: clean build run
 
 clean:
-	@rm -rf $(GAME)
+	@rm -rf $(APP)
 
 build:
 ifeq ($(TARGET_SYSTEM), Windows)
 	@gcc src/*.c \
-		-IC:\Dev\SDL3\include -LC:\Dev\SDL3\lib -lSDL3 \
-		-IC:\Dev\SDL3_image\include -LC:\Dev\SDL3_image\lib -lSDL3_image \
+		-I/c/Dev/SDL3/include -L/c/Dev/SDL3/lib -lSDL3 \
+		-I/c/Dev/SDL3_image/include -L/c/Dev/SDL3_image/lib -lSDL3_image \
 		-lmingw32 -lkernel32 -ladvapi32 -lgdi32 -limm32 -lole32 \
 		-loleaut32 -lsetupapi -lshell32 -luser32 -lversion -lwinmm \
 		-O3 \

@@ -17,4 +17,6 @@ void SDL_AppQuit(void *appstate, SDL_AppResult result) {
 
     state->renderer = NULL;
     state->window = NULL;
+
+    SDL_free(appstate);
 }
